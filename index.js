@@ -9,7 +9,7 @@
  * @returns {Object} - An object with password strength and suggestions.
  */
 
-function validatePassword(password) {
+export function validatePassword(password) {
   const suggestions = [];
   const minLength = 8;
   const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
@@ -77,7 +77,7 @@ function validatePassword(password) {
  * @param {string} password - The password to check.
  * @returns {Promise<Object>} - Breach result and suggestions for improvement.
  */
-async function checkPasswordBreach(password) {
+export async function checkPasswordBreach(password) {
   const crypto = require("crypto");
   const sha1 = crypto.createHash("sha1").update(password).digest("hex").toUpperCase();
   const prefix = sha1.slice(0, 5);
@@ -106,8 +106,3 @@ async function checkPasswordBreach(password) {
     };
   }
 }
-
-export default {
-  validatePassword,
-  checkPasswordBreach,
-};
