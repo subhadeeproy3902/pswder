@@ -1,0 +1,34 @@
+{
+  "name": "pswder",
+  "version": "1.0.0",
+  "description": "Lightweight password strength checker for seamless authentication protection",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subhadeeproy3902/pswder.git"
+  },
+  "keywords": [
+    "password",
+    "validation",
+    "strength",
+    "security",
+    "breach",
+    "pswd",
+    "pswder",
+    "authentication",
+    "auth"
+  ],
+  "author": "Subhadeep Roy",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/subhadeeproy3902/pswder/issues"
+  },
+  "homepage": "https://github.com/subhadeeproy3902/pswder#readme",
+  "dependencies": {
+    "crypto": "^1.0.1"
+  }
+}
