@@ -23,7 +23,9 @@ export function validatePassword(password) {
   if (password.length >= minLength) {
     strengthScore += 1;
   } else {
-    suggestions.push(`Password should be at least ${minLength} characters long.`);
+    suggestions.push(
+      `Password should be at least ${minLength} characters long.`
+    );
   }
 
   // Check for special characters
@@ -66,7 +68,10 @@ export function validatePassword(password) {
 
   return {
     strength: strengthCategory,
-    suggestions: suggestions.length > 0 ? suggestions : ["Your password is strong! No changes needed."],
+    suggestions:
+      suggestions.length > 0
+        ? suggestions
+        : ["Your password is strong! No changes needed."],
   };
 }
 
@@ -78,14 +83,15 @@ export function validatePassword(password) {
  * @returns {Promise<Object>} - Breach result and suggestions for improvement.
  */
 export async function checkPasswordBreach(password) {
-  const crypto = require("crypto");
-  const sha1 = crypto.createHash("sha1").update(password).digest("hex").toUpperCase();
-  const prefix = sha1.slice(0, 5);
-  const suffix = sha1.slice(5);
+  const sha1Hash = await generateSHA1Hash(password);
+  const prefix = sha1Hash.slice(0, 5);
+  const suffix = sha1Hash.slice(5);
 
   try {
     // Use fetch to call the API
-    const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+    const response = await fetch(
+      `https://api.pwnedpasswords.com/range/${prefix}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch breach data.");
     }
@@ -105,4 +111,22 @@ export async function checkPasswordBreach(password) {
       message: "Could not check for breaches. Please try again later.",
     };
   }
+}
+
+/**
+ * Generates a SHA-1 hash for the given password using SubtleCrypto (browser-compatible).
+ *
+ * @param {string} password - The password to hash.
+ * @returns {Promise<string>} - A Promise that resolves to the SHA-1 hash of the password.
+ */
+async function generateSHA1Hash(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest("SHA-1", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase();
+  return hashHex;
 }
