@@ -30,6 +30,6 @@
   "homepage": "https://github.com/subhadeeproy3902/pswder#readme",
   "dependencies": {
     "crypto": "^1.0.1",
-    "pswder": "^1.0.1"
+    "pswder": "^1.0.2"
   }
 }
